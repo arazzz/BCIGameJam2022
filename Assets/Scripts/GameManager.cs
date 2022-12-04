@@ -52,14 +52,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        // Debug.Log((foodSprites["Food-2"] as Sprite[])[0]);
-
-        // float innerGameWidth = GameObject.Find("Left Border").GetComponent<SpriteRenderer>().bounds.size.x - GameObject.Find("Right Border").GetComponent<SpriteRenderer>().bounds.size.x;
-        // float innerGameHeight = Screen.height - GameObject.Find("Top Border").GetComponent<SpriteRenderer>().bounds.size.y - GameObject.Find("Bottom Border").GetComponent<SpriteRenderer>().bounds.size.y;
-
-        // Debug.Log(innerGameWidth);
-        // Debug.Log(innerGameHeight);
-
         // Create the recipe trials
         for (int i = 0; i < numRecipeTrials; i++)
         {
@@ -89,7 +81,6 @@ public class GameManager : MonoBehaviour
                 Sprite ingredientSprite = (foodSprites[ingredientSpriteSheet] as Sprite[])[ingredientSpriteIndex];
 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sprite = ingredientSprite;
-                
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sortingOrder = 1;
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.parent = recipeTrials[i].gameObject.transform;
                 
@@ -99,19 +90,10 @@ public class GameManager : MonoBehaviour
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].AddComponent<BoxCollider2D>();
 
-                // spriteObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
-                // spriteObject.AddComponent<BoxCollider2D>();
-                // spriteObject.transform.parent = this.gameObject.transform;
-
-                // Debug.Log($"Recipe {i} - Ingredient {j} - {randomRecipe.Value[j]}");
-
             }
             
         }
 
-        // // Create ingredient object by specifying sprite path and position
-        // int ingredientSpriteIndex = GetRandInt(0, 233);
-        // ingredientObject = CreateIngredientObject("Sprites/Food-2/225 - icons pack sprite sheet_${ingredientSpriteIndex}", new Vector3(0, 0, 0));
     }
 
     // Update is called once per frame
