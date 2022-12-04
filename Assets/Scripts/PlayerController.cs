@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private float maxPositionX = 7;
     private float minPositionX = -7;
 
+    private bool triggerEntered = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,11 @@ public class PlayerController : MonoBehaviour
 
         amountToMove = new Vector2(currentSpeed, 0);
         playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
+
+        if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
+            Debug.Log("Spacebar pressed");
+        }
+
     }
 
     private float IncrementTowards(float n, float target, float a) {
@@ -51,4 +58,19 @@ public class PlayerController : MonoBehaviour
             return (dir == Mathf.Sign(target - n)) ? n : target; // if n has now passed target then return target, otherwise return n
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D foodItem) {
+        triggerEntered = true;
+    }
+
+    private void OnTriggerExit2D() {
+        triggerEntered = false;
+    }
+
+    /** 
+
+        - Cheese + Flour + Tomato = Pizza
+    
+    **/
+
 }
