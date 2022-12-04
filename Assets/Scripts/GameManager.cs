@@ -30,21 +30,22 @@ public class GameManager : MonoBehaviour
         },
         // ... more recipes
     };
-
-    public List<string> recipeNames = new List<string>(recipes.Keys);
+    public List<string> recipeNames;
 
     void Awake()
     {
+        
+        recipeNames = new List<string>(recipes.Keys);
 
         // float x1 = GameObject.Find("Left Border").GetComponent<SpriteRenderer>().bounds.size.x / 2 + GameObject.Find("Left Border").transform.position.x;
         // float x2 = GameObject.Find("Right Border").transform.position.x - GameObject.Find("Right Border").GetComponent<SpriteRenderer>().bounds.size.x / 2;
         // float y1 = GameObject.Find("Bottom Border").GetComponent<SpriteRenderer>().bounds.size.y / 2 + GameObject.Find("Bottom Border").transform.position.y;
         // float y2 = GameObject.Find("Top Border").transform.position.y - GameObject.Find("Top Border").GetComponent<SpriteRenderer>().bounds.size.y / 2;
 
-        foodSprites = new Dictionary<string, object>
-        {
-            {"Food-2", Resources.LoadAll<Sprite>("Sprites/Food-2")}
-        };
+        // foodSprites = new Dictionary<string, object>
+        // {
+        //     {"Food-2", Resources.LoadAll<Sprite>("Sprites/Food-2")}
+        // };
     }
 
     // Start is called before the first frame update
@@ -56,28 +57,30 @@ public class GameManager : MonoBehaviour
         {
 
             // Get random recipe from recipes dictionary
-            KeyValuePair <string, string[,]> randomRecipe = GetRandomRecipe();
+            KeyValuePair <string, string[]> randomRecipe = GetRandomRecipe();
 
             recipeTrials[i] = new GameObject();
             recipeTrials[i].name = "Recipe Trial " + i;
             recipeTrials[i].AddComponent<Recipe>();
-            recipeTrials[i].GetComponent<Recipe>().ingredients = new GameObject[randomRecipe.Value.GetLength(0)];
+            recipeTrials[i].GetComponent<Recipe>().ingredients = new GameObject[randomRecipe.Value.Length];
             recipeTrials[i].GetComponent<Recipe>().recipeName = randomRecipe.Key;
             recipeTrials[i].GetComponent<Recipe>().transform.parent = this.transform;
 
             // Create the ingredients
-            for (int j = 0; j < randomRecipe.Value.GetLength(0); j++)
+            for (int j = 0; j < randomRecipe.Value.Length; j++)
             {
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j] = Instantiate(ingredientPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].name = $"Recipe {i} - Ingredient {j}";
                 
                 // Parse the sprite name from the recipes dictionary and load it from the foodSprites dictionary 
-                string[] ingredientSpriteInfo = randomRecipe.Value[j,1].Split('/');
-                string ingredientSpriteSheet = ingredientSpriteInfo[0];
-                MatchCollection ingredientSpriteIndexMatches = Regex.Matches(ingredientSpriteInfo[1], @"\d+");
-                int ingredientSpriteIndex = Int32.Parse(ingredientSpriteIndexMatches[ingredientSpriteIndexMatches.Count - 1].Value);
-                Sprite ingredientSprite = (foodSprites[ingredientSpriteSheet] as Sprite[])[ingredientSpriteIndex];
+                // string[] ingredientSpriteInfo = randomRecipe.Value[j].Split('/');
+                // string ingredientSpriteSheet = ingredientSpriteInfo[0];
+                // MatchCollection ingredientSpriteIndexMatches = Regex.Matches(ingredientSpriteInfo[1], @"\d+");
+                // int ingredientSpriteIndex = Int32.Parse(ingredientSpriteIndexMatches[ingredientSpriteIndexMatches.Count - 1].Value);
+                // Sprite ingredientSprite = (foodSprites[ingredientSpriteSheet] as Sprite[])[ingredientSpriteIndex];
+
+                Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/{randomRecipe.Key}/{randomRecipe.Value[j]}");
 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sprite = ingredientSprite;
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -131,10 +134,16 @@ public class GameManager : MonoBehaviour
     }
 
     // Get random recipe from recipes dictionary
-    private KeyValuePair<string, string[,]> GetRandomRecipe()
+    // private KeyValuePair<string, string[]> GetRandomRecipe()
+    // {
+    //     int randomRecipeIndex = GetRandInt(0, recipeNames.Count);
+    //     return new KeyValuePair<string, string[]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
+    // }
+
+    private KeyValuePair<string, string[]> GetRandomRecipe()
     {
         int randomRecipeIndex = GetRandInt(0, recipeNames.Count);
-        return new KeyValuePair<string, string[,]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
+        return new KeyValuePair<string, string[]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
     }
 
 }
