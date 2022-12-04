@@ -8,7 +8,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    private Vector2 screenBounds;
+    // private Vector2 screenBounds;
 
     public static int numRecipeTrials = 1;
     public static int numIngredients = 3;
@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+
+        // float x1 = GameObject.Find("Left Border").GetComponent<SpriteRenderer>().bounds.size.x / 2 + GameObject.Find("Left Border").transform.position.x;
+        // float x2 = GameObject.Find("Right Border").transform.position.x - GameObject.Find("Right Border").GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        // float y1 = GameObject.Find("Bottom Border").GetComponent<SpriteRenderer>().bounds.size.y / 2 + GameObject.Find("Bottom Border").transform.position.y;
+        // float y2 = GameObject.Find("Top Border").transform.position.y - GameObject.Find("Top Border").GetComponent<SpriteRenderer>().bounds.size.y / 2;
+
         foodSprites = new Dictionary<string, object>
         {
             {"Food-2", Resources.LoadAll<Sprite>("Sprites/Food-2")}
@@ -44,7 +50,11 @@ public class GameManager : MonoBehaviour
 
         // Debug.Log((foodSprites["Food-2"] as Sprite[])[0]);
 
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        // float innerGameWidth = GameObject.Find("Left Border").GetComponent<SpriteRenderer>().bounds.size.x - GameObject.Find("Right Border").GetComponent<SpriteRenderer>().bounds.size.x;
+        // float innerGameHeight = Screen.height - GameObject.Find("Top Border").GetComponent<SpriteRenderer>().bounds.size.y - GameObject.Find("Bottom Border").GetComponent<SpriteRenderer>().bounds.size.y;
+
+        // Debug.Log(innerGameWidth);
+        // Debug.Log(innerGameHeight);
 
         // Create the recipe trials
         for (int i = 0; i < numRecipeTrials; i++)
@@ -67,21 +77,22 @@ public class GameManager : MonoBehaviour
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j] = Instantiate(ingredientPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].name = $"Recipe {i} - Ingredient {j}";
                 
+                // Parse the sprite name from the recipes dictionary and load it from the foodSprites dictionary 
                 string[] ingredientSpriteInfo = randomRecipe.Value[j].Split('/');
                 string ingredientSpriteSheet = ingredientSpriteInfo[0];
                 MatchCollection ingredientSpriteIndexMatches = Regex.Matches(ingredientSpriteInfo[1], @"\d+");
                 int ingredientSpriteIndex = Int32.Parse(ingredientSpriteIndexMatches[ingredientSpriteIndexMatches.Count - 1].Value);
-
                 Sprite ingredientSprite = (foodSprites[ingredientSpriteSheet] as Sprite[])[ingredientSpriteIndex];
 
-                Debug.Log("Ingredient Sprite: " + ingredientSprite.name);
-                
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sprite = ingredientSprite;
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sortingOrder = 1;
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.parent = recipeTrials[i].gameObject.transform;
+                
+                // ! TODO: Optimize the placement and sizing of the ingredients
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.position = new Vector3(-5.5f + 2.0f*j, 1.75f, 0.0f);
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.localScale = new Vector3(5f, 5f, 5f);
+                
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].AddComponent<BoxCollider2D>();
 
                 // spriteObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;

@@ -36,12 +36,15 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.x > maxPositionX) {
             direction = -1;
+            this.transform.Rotate(0, 180, 0);
         } else if (transform.position.x < minPositionX) {
             direction = 1;
+            this.transform.Rotate(0, -180, 0);
         }
 
         amountToMove = new Vector2(currentSpeed, 0);
-        playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
+        // playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
+        playerPhysics.MoveAmount(amountToMove * Time.deltaTime);
 
         if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
             Debug.Log("Spacebar pressed");
