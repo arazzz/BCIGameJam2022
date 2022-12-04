@@ -19,16 +19,15 @@ public class GameManager : MonoBehaviour
     public GameObject ingredientPrefab;
 
     public Dictionary <string, object> foodSprites = new Dictionary<string, object>();
-    public static Dictionary<string, string[,]> recipes = new Dictionary<string, string[,]>
-    {   
-        // Cheese + Flour + Tomato = Pizza
+    public static Dictionary<string, string[]> recipes = new Dictionary<string, string[]>
+    {
         { 
-            "pizza", new [,] {
-                { "cheese", "Food-2/225 - icons pack sprite sheet_128" }, // Cheese 
-                { "tomato", "Food-2/225 - icons pack sprite sheet_64" },  // Tomato 
-                { "flour", "Food-2/225 - icons pack sprite sheet_50" }, // Dough ?
+            "applepie", new [] {
+                "applepie_apple",
+                "applepie_egg",
+                "applepie_flour",
             }
-        }
+        },
         // ... more recipes
     };
 
