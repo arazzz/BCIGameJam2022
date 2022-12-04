@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] recipeTrials = new GameObject[numRecipeTrials];
     public GameObject ingredientObject;
 
-    public recipes = Dictionary<string, string[]> dict = new Dictionary<string, string[]>
+    public static Dictionary<string, string[]> recipes = new Dictionary<string, string[]>
     {   
         // Cheese + Flour + Tomato = Pizza
         { "pizza", new [] {
@@ -22,23 +22,17 @@ public class GameManager : MonoBehaviour
             "Sprites/Food-2/225 - icons pack sprite sheet_50" // Dough ?
         } },
     };
-    public List<string> recipeNames = new List<string>(dict.Keys);
+    public List<string> recipeNames = new List<string>(recipes.Keys);
 
     // Start is called before the first frame update
     void Start()
     {
-        // ingredientObject = new GameObject();
-        // int ingredientSpriteIndex = GetRandInt(222, 239);
-        // ingredientObject.name = "Sample Ingredient";
-        // ingredientObject.AddComponent<SpriteRenderer>();
-        // ingredientObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/FOOD 1_{ingredientSpriteIndex}");
-        // ingredientObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        // ingredientObject.AddComponent<BoxCollider2D>();
-        
-        // // Position the ingredient object
-        // ingredientObject.transform.position = new Vector3(0, 0, 0);
 
-        
+        // Store random recipe from recipes dictionary
+        KeyValuePair <string, string[]> randomRecipe = GetRandomRecipe();
+
+        // Log first value of random recipe
+        Debug.Log(randomRecipe.Value[0]);
 
         // for (int i = 0; i < numRecipeTrials; i++)
         // {
@@ -91,11 +85,11 @@ public class GameManager : MonoBehaviour
         return CreateSpriteObject("Sample Ingredient", spritePath, 1, position);
     }
 
-    // Get random recipe entry
+    // Get random recipe from recipes dictionary
     private KeyValuePair<string, string[]> GetRandomRecipe()
     {
-        int recipeIndex = GetRandInt(0, recipeNames.Count);
-        return recipes[recipeNames[recipeIndex]];
+        int randomRecipeIndex = GetRandInt(0, recipeNames.Count);
+        return new KeyValuePair<string, string[]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
     }
 
 }
