@@ -28,7 +28,35 @@ public class GameManager : MonoBehaviour
                 "applepie_flour",
             }
         },
-        // ... more recipes
+        { 
+            "cheeseburger", new [] {
+                "cheeseburger_bun",
+                "cheeseburger_cheese",
+                "cheeseburger_meat",
+            }
+        },
+        { 
+            "curry", new [] {
+                "curry_sauce",
+                "curry_bellpeppers",
+                "curry_steak",
+            }
+        },
+        { 
+            "strawberrycake", new [] {
+                "strawberrycake_strawberry",
+                "strawberrycake_butter",
+                "strawberrycake_milk",
+            }
+        },
+        { 
+            "pizza", new [] {
+                "pizza_flour",
+                "pizza_tomato",
+                "pizza_cheese",
+            }
+        },
+        
     };
     public List<string> recipeNames;
 
