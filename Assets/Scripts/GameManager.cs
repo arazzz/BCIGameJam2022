@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] recipeTrials = new GameObject[numRecipeTrials];
     public GameObject ingredientObject;
     public GameObject ingredientPrefab;
+    public GameObject[] setPathPoints;
 
     public Dictionary <string, object> foodSprites = new Dictionary<string, object>();
     public static Dictionary<string, string[]> recipes = new Dictionary<string, string[]>
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //new ingredient spawn time
+        Time.fixedDeltaTime =5.0f;
 
         // Create the recipe trials
         for (int i = 0; i < numRecipeTrials; i++)
@@ -136,6 +139,33 @@ public class GameManager : MonoBehaviour
     private int GetRandInt(int minimum, int maximum)
     {
         return UnityEngine.Random.Range(minimum, maximum);
+    }
+
+    void FixedUpdate(){
+       spawnIngredientOnBelt();
+    }
+
+    private void spawnIngredientOnBelt(){
+
+        
+        GameObject ingredient = Instantiate(ingredientPrefab, new Vector3(8, 8, 0), Quaternion.identity);
+        ingredient.name = "applepie_apple";//$"Recipe {i} - Ingredient {j}";
+
+        Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/applepie/applepie_apple");
+
+        ingredient.GetComponent<SpriteRenderer>().sprite = ingredientSprite;
+        ingredient.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        ingredient.transform.parent = ingredient.transform;
+        ingredient.transform.localScale = new Vector3(5f, 5f, 5f);
+        ingredient.AddComponent<BoxCollider2D>();
+
+        GameObject np = new GameObject();
+        np.AddComponent<BorderPathMovement>().name = "path";
+        np.GetComponent<BorderPathMovement>().obj = ingredient;
+        np.GetComponent<BorderPathMovement>().pathPoints = setPathPoints;
+        np.GetComponent<BorderPathMovement>().numPoints = 4;
+        np.GetComponent<BorderPathMovement>().speed = 2;
+
     }
 
     // Create a sprite object
