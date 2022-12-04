@@ -22,14 +22,16 @@ public class GameManager : MonoBehaviour
     public static Dictionary<string, string[,]> recipes = new Dictionary<string, string[,]>
     {   
         // Cheese + Flour + Tomato = Pizza
-        { "pizza", new [,] {
-            {"cheese", "Food-2/225 - icons pack sprite sheet_128"}, // Cheese 
-            {"tomato", "Food-2/225 - icons pack sprite sheet_64"},  // Tomato 
-            {"flour", "Food-2/225 - icons pack sprite sheet_50" }, // Dough ?
-        },
-        // ... 
-        },
+        { 
+            "pizza", new [,] {
+                { "cheese", "Food-2/225 - icons pack sprite sheet_128" }, // Cheese 
+                { "tomato", "Food-2/225 - icons pack sprite sheet_64" },  // Tomato 
+                { "flour", "Food-2/225 - icons pack sprite sheet_50" }, // Dough ?
+            }
+        }
+        // ... more recipes
     };
+
     public List<string> recipeNames = new List<string>(recipes.Keys);
 
     void Awake()
@@ -68,12 +70,12 @@ public class GameManager : MonoBehaviour
             recipeTrials[i] = new GameObject();
             recipeTrials[i].name = "Recipe Trial " + i;
             recipeTrials[i].AddComponent<Recipe>();
-            recipeTrials[i].GetComponent<Recipe>().ingredients = new GameObject[randomRecipe.Value.Length];
+            recipeTrials[i].GetComponent<Recipe>().ingredients = new GameObject[randomRecipe.Value.GetLength(0)];
             recipeTrials[i].GetComponent<Recipe>().recipeName = randomRecipe.Key;
             recipeTrials[i].GetComponent<Recipe>().transform.parent = this.transform;
 
             // Create the ingredients
-            for (int j = 0; j < randomRecipe.Value.Length; j++)
+            for (int j = 0; j < randomRecipe.Value.GetLength(0); j++)
             {
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j] = Instantiate(ingredientPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -148,10 +150,10 @@ public class GameManager : MonoBehaviour
     }
 
     // Get random recipe from recipes dictionary
-    private KeyValuePair<string, string[]> GetRandomRecipe()
+    private KeyValuePair<string, string[,]> GetRandomRecipe()
     {
         int randomRecipeIndex = GetRandInt(0, recipeNames.Count);
-        return new KeyValuePair<string, string[]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
+        return new KeyValuePair<string, string[,]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
     }
 
 }
