@@ -19,14 +19,16 @@ public class GameManager : MonoBehaviour
     public GameObject ingredientPrefab;
 
     public Dictionary <string, object> foodSprites = new Dictionary<string, object>();
-    public static Dictionary<string, string[]> recipes = new Dictionary<string, string[]>
+    public static Dictionary<string, string[,]> recipes = new Dictionary<string, string[,]>
     {   
         // Cheese + Flour + Tomato = Pizza
-        { "pizza", new [] {
-            "Food-2/225 - icons pack sprite sheet_128", // Cheese 
-            "Food-2/225 - icons pack sprite sheet_64",  // Tomato 
-            "Food-2/225 - icons pack sprite sheet_50" // Dough ?
-        } },
+        { "pizza", new [,] {
+            {"cheese", "Food-2/225 - icons pack sprite sheet_128"}, // Cheese 
+            {"tomato", "Food-2/225 - icons pack sprite sheet_64"},  // Tomato 
+            {"flour", "Food-2/225 - icons pack sprite sheet_50" }, // Dough ?
+        },
+        // ... 
+        },
     };
     public List<string> recipeNames = new List<string>(recipes.Keys);
 
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
         {
 
             // Get random recipe from recipes dictionary
-            KeyValuePair <string, string[]> randomRecipe = GetRandomRecipe();
+            KeyValuePair <string, string[,]> randomRecipe = GetRandomRecipe();
 
             recipeTrials[i] = new GameObject();
             recipeTrials[i].name = "Recipe Trial " + i;
@@ -78,7 +80,7 @@ public class GameManager : MonoBehaviour
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].name = $"Recipe {i} - Ingredient {j}";
                 
                 // Parse the sprite name from the recipes dictionary and load it from the foodSprites dictionary 
-                string[] ingredientSpriteInfo = randomRecipe.Value[j].Split('/');
+                string[] ingredientSpriteInfo = randomRecipe.Value[j,1].Split('/');
                 string ingredientSpriteSheet = ingredientSpriteInfo[0];
                 MatchCollection ingredientSpriteIndexMatches = Regex.Matches(ingredientSpriteInfo[1], @"\d+");
                 int ingredientSpriteIndex = Int32.Parse(ingredientSpriteIndexMatches[ingredientSpriteIndexMatches.Count - 1].Value);

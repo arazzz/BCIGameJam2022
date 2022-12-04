@@ -15,11 +15,12 @@ public class PlayerController : MonoBehaviour
 
     private PlayerPhysics playerPhysics;
 
-    private int direction = 1;
+    // private int direction = 1;
     private float maxPositionX = 7;
     private float minPositionX = -7;
 
     private bool triggerEntered = false;
+    private Collider2D itemCollidedWith;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +36,10 @@ public class PlayerController : MonoBehaviour
         currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
 
         if (transform.position.x > maxPositionX) {
-            direction = -1;
+            // direction = -1;
             this.transform.Rotate(0, 180, 0);
         } else if (transform.position.x < minPositionX) {
-            direction = 1;
+            // direction = 1;
             this.transform.Rotate(0, -180, 0);
         }
 
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
         playerPhysics.MoveAmount(amountToMove * Time.deltaTime);
 
         if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
-            Debug.Log("Spacebar pressed");
+            Debug.Log(itemCollidedWith.gameObject.name);
         }
 
     }
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D foodItem) {
         triggerEntered = true;
+        itemCollidedWith = foodItem;
     }
 
     private void OnTriggerExit2D() {
