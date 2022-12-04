@@ -25,4 +25,9 @@ public class Boundaries : MonoBehaviour
         viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
         transform.position = viewPos;
     }
+
+    // Getter for screenBounds
+    public Vector2 getScreenBounds() {
+        return screenBounds;
+    }
 }

@@ -8,6 +8,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    private Vector2 screenBounds;
+
     public static int numRecipeTrials = 1;
     public static int numIngredients = 3;
     public int currentRecipeTrial = 0;
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
 
         // Debug.Log((foodSprites["Food-2"] as Sprite[])[0]);
 
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+
         // Create the recipe trials
         for (int i = 0; i < numRecipeTrials; i++)
         {
@@ -65,15 +69,19 @@ public class GameManager : MonoBehaviour
                 
                 string[] ingredientSpriteInfo = randomRecipe.Value[j].Split('/');
                 string ingredientSpriteSheet = ingredientSpriteInfo[0];
-                string ingredientSpriteIndex = Regex.Match(ingredientSpriteInfo[1], @"\d+").Value; 
-                Sprite ingredientSprite = (foodSprites[ingredientSpriteSheet] as Sprite[])[int.Parse(ingredientSpriteIndex)];
+                MatchCollection ingredientSpriteIndexMatches = Regex.Matches(ingredientSpriteInfo[1], @"\d+");
+                int ingredientSpriteIndex = Int32.Parse(ingredientSpriteIndexMatches[ingredientSpriteIndexMatches.Count - 1].Value);
+
+                Sprite ingredientSprite = (foodSprites[ingredientSpriteSheet] as Sprite[])[ingredientSpriteIndex];
+
+                Debug.Log("Ingredient Sprite: " + ingredientSprite.name);
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sprite = ingredientSprite;
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sortingOrder = 1;
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.parent = recipeTrials[i].gameObject.transform;
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.position = new Vector3(-5.5f + 2.0f*j, 1.75f, 0.0f);
-                // recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.localScale = new Vector3(2, 2, 2);
+                recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.localScale = new Vector3(5f, 5f, 5f);
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].AddComponent<BoxCollider2D>();
 
                 // spriteObject.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
