@@ -22,12 +22,16 @@ public class Ingredient : MonoBehaviour
         {
             FallDown();
         }
+        if (transform.position.x > 6&& transform.position.y > 6) {
+            Destroy(gameObject);
+        }
     }
 
     private void OnMouseDown()
     {
         if (transform.position.y > 7 && transform.position.x > -6.5 && transform.position.x < 5)
         {
+            gameObject.GetComponent<AudioSource>().Play();
             sendDown = true;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
 
