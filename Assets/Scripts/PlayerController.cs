@@ -7,11 +7,8 @@ public class PlayerController : MonoBehaviour
 {
 
     public float speed = 8;
-    public float acceleration = 12;
 
-    private float currentSpeed;
-    private float targetSpeed;
-    private Vector2 amountToMove;
+    private Vector3 amountToMove;
 
     private PlayerPhysics playerPhysics;
 
@@ -31,41 +28,43 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // targetSpeed = Input.GetAxisRaw("Horizontal") * speed;
-        targetSpeed = speed;
-        currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
+        
+        amountToMove = new Vector3(speed, 0, 0);
+        transform.Translate(amountToMove * Time.deltaTime);
 
-        if (transform.position.x > maxPositionX) {
-            // direction = -1;
-            this.transform.Rotate(0, 180, 0);
-        } else if (transform.position.x < minPositionX) {
-            // direction = 1;
-            this.transform.Rotate(0, -180, 0);
+        // if (transform.position.x > maxPositionX) {
+        //     // direction = -1;
+        //     this.transform.Rotate(0, 180, 0);
+        // } else if (transform.position.x < minPositionX) {
+        //     // direction = 1;
+        //     this.transform.Rotate(0, -180, 0);
+        // }
+
+        if (triggerEntered) {
+            if (itemCollidedWith.gameObject.name == "Right Border") {
+                this.transform.Rotate(0, 180, 0);
+                triggerEntered = false;
+            } else if (itemCollidedWith.gameObject.name == "Left Border") {
+                this.transform.Rotate(0, -180, 0);
+                triggerEntered = false;
+            }
         }
 
-        amountToMove = new Vector2(currentSpeed, 0);
-        // playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
-        playerPhysics.MoveAmount(amountToMove * Time.deltaTime);
+        
 
-        if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
+        // amountToMove = new Vector2(currentSpeed, 0);
+        // playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
+
+        // if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
+        if (triggerEntered == true) {
             Debug.Log(itemCollidedWith.gameObject.name);
         }
 
     }
 
-    private float IncrementTowards(float n, float target, float a) {
-        if (n == target) {
-            return n;
-        } else {
-            float dir = Mathf.Sign(target - n); // must n be increased or decreased to get closer to target
-            n += a*Time.deltaTime * dir;
-            return (dir == Mathf.Sign(target - n)) ? n : target; // if n has now passed target then return target, otherwise return n
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D foodItem) {
+    private void OnTriggerEnter2D(Collider2D item) {
         triggerEntered = true;
-        itemCollidedWith = foodItem;
+        itemCollidedWith = item;
     }
 
     private void OnTriggerExit2D() {
