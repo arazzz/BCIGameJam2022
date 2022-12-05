@@ -27,13 +27,14 @@ public class PlayerController : MonoBehaviour
     
     // The game manager
     private GameObject gameManager;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         playerPhysics = GetComponent<PlayerPhysics>();
         anim = gameObject.GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
         // Get the game manager
         gameManager = this.transform.parent.gameObject;
     }
@@ -70,8 +71,10 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("Correct ingredient!");
                     // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
                     Destroy(itemCollidedWith.gameObject);
+                    
                 } else {
                     Debug.Log("Wrong ingredient!");
+                    audioSource.Play();
                 }
 
                 // Debug.Log(itemCollidedWith.gameObject.name);
