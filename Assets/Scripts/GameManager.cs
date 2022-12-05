@@ -146,8 +146,6 @@ public class GameManager : MonoBehaviour
             currentRecipeName = randomRecipe.Key;
             currentRecipe = randomRecipe.Value;
 
-            Debug.Log(currentRecipe);
-
             // Create the ingredients
             for (int j = 0; j < randomRecipe.Value.Length; j++)
             {

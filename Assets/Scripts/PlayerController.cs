@@ -26,7 +26,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerPhysics = GetComponent<PlayerPhysics>();
+
         gameManager = this.transform.parent.gameObject;
+
     }
 
     // Update is called once per frame
@@ -56,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
          if (Input.GetKeyDown (KeyCode.Space)) {
             
-            anim.Play("chef_holding");
+            // anim.Play("chef_holding");
 
             Debug.Log(gameManager.GetComponent<GameManager>().currentRecipe[0]);
 
@@ -65,12 +67,22 @@ public class PlayerController : MonoBehaviour
                 // Debug.Log(gameManager.GetComponent<GameManager>().currentRecipe[0]);
                 
                 // if (itemCollidedWith.gameObject.name.)
+
+                Debug.Log("name" + itemCollidedWith.gameObject.name);
+
                 if (gameManager.GetComponent<GameManager>().currentRecipe.Any(itemCollidedWith.gameObject.name.Contains)) {
-                    Debug.Log("Correct ingredient!");
+                    
+                    // Success
+
                     // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
                     Destroy(itemCollidedWith.gameObject);
+                    
                 } else {
-                    anim.Play("chef_panic");
+
+                    // Fail
+                    Destroy(itemCollidedWith.gameObject);
+
+                    // anim.Play("chef_panic");
                 }
 
                 // Debug.Log(itemCollidedWith.gameObject.name);
