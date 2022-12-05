@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
                 Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/{randomRecipe.Key}/{randomRecipe.Value[j]}");
 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sprite = ingredientSprite;
+                recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].GetComponent<SpriteRenderer>().sortingOrder = 1;
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.parent = recipeTrials[i].gameObject.transform;
                 

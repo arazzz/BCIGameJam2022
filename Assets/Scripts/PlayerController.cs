@@ -13,8 +13,6 @@ public class PlayerController : MonoBehaviour
     private PlayerPhysics playerPhysics;
 
     // private int direction = 1;
-    private float maxPositionX = 7;
-    private float minPositionX = -7;
 
     private bool triggerEntered = false;
     private Collider2D itemCollidedWith;
