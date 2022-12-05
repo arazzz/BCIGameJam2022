@@ -104,6 +104,9 @@ public class GameManager : MonoBehaviour
     };
     public List<string> recipeNames;
 
+    public string currentRecipeName;
+    public string[] currentRecipe;
+
     public GameObject[] setPathPoints;
 
     void Awake()
@@ -139,6 +142,11 @@ public class GameManager : MonoBehaviour
             recipeTrials[i].GetComponent<Recipe>().ingredients = new GameObject[randomRecipe.Value.Length];
             recipeTrials[i].GetComponent<Recipe>().recipeName = randomRecipe.Key;
             recipeTrials[i].GetComponent<Recipe>().transform.parent = this.transform;
+
+            currentRecipeName = randomRecipe.Key;
+            currentRecipe = randomRecipe.Value;
+
+            Debug.Log(currentRecipe);
 
             // Create the ingredients
             for (int j = 0; j < randomRecipe.Value.Length; j++)
