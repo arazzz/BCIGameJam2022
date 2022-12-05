@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 [RequireComponent(typeof(Recipe))]
 public class GameManager : MonoBehaviour
@@ -11,7 +12,6 @@ public class GameManager : MonoBehaviour
     // private Vector2 screenBounds;
 
     public static int numRecipeTrials = 1;
-    public static int numIngredients = 3;
     public int currentRecipeTrial = 0;
 
     public GameObject[] recipeTrials = new GameObject[numRecipeTrials];
@@ -61,10 +61,54 @@ public class GameManager : MonoBehaviour
     };
     public List<string> recipeNames;
 
+    public string currentRecipeName;
+    public string[] currentRecipe;
+
+    public static int numIngredients = 5;
+    public static string[] ingredientSpritePaths = {
+        "applepie/applepie_apple",
+        "applepie/applepie_egg",
+        "applepie/applepie_flour",
+        "cheeseburger/cheeseburger_bun",
+        "cheeseburger/cheeseburger_cheese",
+        "cheeseburger/cheeseburger_meat",
+        "curry/curry_sauce",
+        "curry/curry_bellpeppers",
+        "curry/curry_steak",
+        "strawberrycake/strawberrycake_strawberry",
+        "strawberrycake/strawberrycake_butter",
+        "strawberrycake/strawberrycake_milk",
+        "pizza/pizza_flour",
+        "pizza/pizza_tomato",
+        "pizza/pizza_cheese",
+        "wrong_items/wrong_apples",
+        "wrong_items/wrong_bacon",
+        "wrong_items/wrong_bagel",
+        "wrong_items/wrong_banana",
+        "wrong_items/wrong_bulb",
+        "wrong_items/wrong_cabbage",
+        "wrong_items/wrong_chips",
+        "wrong_items/wrong_donut",
+        "wrong_items/wrong_duck",
+        "wrong_items/wrong_glue",
+        "wrong_items/wrong_gummybear",
+        "wrong_items/wrong_salmon",
+        "wrong_items/wrong_soap",
+        "wrong_items/wrong_soda",
+        "wrong_items/wrong_toothpaste",
+        "wrong_items/wrong_tuna",
+        "wrong_items/wrong_watermelon",
+    };
+    public GameObject[] conveyorBelt = new GameObject[numIngredients];
+    public GameObject[] conveyorBeltMovementPaths = new GameObject[numIngredients];
+    private GameObject borderPathMovement;
+
     void Awake()
     {
         
         recipeNames = new List<string>(recipes.Keys);
+
+        borderPathMovement = GameObject.Find("BorderPathMovement");
 
         // float x1 = GameObject.Find("Left Border").GetComponent<SpriteRenderer>().bounds.size.x / 2 + GameObject.Find("Left Border").transform.position.x;
         // float x2 = GameObject.Find("Right Border").transform.position.x - GameObject.Find("Right Border").GetComponent<SpriteRenderer>().bounds.size.x / 2;
@@ -96,6 +140,9 @@ public class GameManager : MonoBehaviour
             recipeTrials[i].GetComponent<Recipe>().ingredients = new GameObject[randomRecipe.Value.Length];
             recipeTrials[i].GetComponent<Recipe>().recipeName = randomRecipe.Key;
             recipeTrials[i].GetComponent<Recipe>().transform.parent = this.transform;
+
+            currentRecipeName = randomRecipe.Key;
+            currentRecipe = randomRecipe.Value;
 
             // Create the ingredients
             for (int j = 0; j < randomRecipe.Value.Length; j++)
@@ -132,7 +179,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+            
     }
 
     // Generate random integer
@@ -145,16 +192,16 @@ public class GameManager : MonoBehaviour
        spawnIngredientOnBelt();
     }
 
-    private void spawnIngredientOnBelt(){
-
+    private void spawnIngredientOnBelt() {
         
-        GameObject ingredient = Instantiate(ingredientPrefab, new Vector3(8, 8, 0), Quaternion.identity);
-        ingredient.name = "applepie_apple";//$"Recipe {i} - Ingredient {j}";
+        string randIngredient = ingredientSpritePaths[UnityEngine.Random.Range(0, ingredientSpritePaths.Length)];
+        GameObject ingredient = Instantiate(ingredientPrefab, new Vector3(8, -8, 0), Quaternion.identity);
+        ingredient.name = $"Ingredient {randIngredient}";
 
-        Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/applepie/applepie_apple");
+        Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/{randIngredient}");
 
         ingredient.GetComponent<SpriteRenderer>().sprite = ingredientSprite;
-        ingredient.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        ingredient.GetComponent<SpriteRenderer>().sortingOrder = 2;
         ingredient.transform.parent = ingredient.transform;
         ingredient.transform.localScale = new Vector3(5f, 5f, 5f);
         ingredient.AddComponent<BoxCollider2D>();
@@ -165,6 +212,7 @@ public class GameManager : MonoBehaviour
         np.GetComponent<BorderPathMovement>().pathPoints = setPathPoints;
         np.GetComponent<BorderPathMovement>().numPoints = 4;
         np.GetComponent<BorderPathMovement>().speed = 2;
+        np.transform.parent = ingredient.transform;
 
     }
 
@@ -203,5 +251,56 @@ public class GameManager : MonoBehaviour
         int randomRecipeIndex = GetRandInt(0, recipeNames.Count);
         return new KeyValuePair<string, string[]>(recipeNames[randomRecipeIndex], recipes[recipeNames[randomRecipeIndex]]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+    void FixedUpdate() {
+
+        // Create conveyor belt of random ingredients
+        for (int i = 0; i < numIngredients; i++) {
+            conveyorBelt[i] = Instantiate(ingredientPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            // conveyorBelt[i].transform.parent = ingredientObject.transform;
+            conveyorBelt[i].transform.position = new Vector3(0, 0, 0);
+            // conveyorBelt[i].transform.position = new Vector3(UnityEngine.Random.Range(-7, 7), UnityEngine.Random.Range(-4, 4), 0);
+            conveyorBelt[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/menu/{ingredientSpritePaths[UnityEngine.Random.Range(0, ingredientSpritePaths.Length)]}");
+            conveyorBelt[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            conveyorBelt[i].transform.localScale = new Vector3(5f, 5f, 5f);
+
+            conveyorBeltMovementPaths[i] = Instantiate(borderPathMovement, new Vector3(0, 0, 0), Quaternion.identity);
+
+            // Debug.Log(conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().pathPoints);
+
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().obj = conveyorBelt[i];
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().numPoints = 4;
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().speed = 1;
+
+            // Assign Point #1, #2, #3, #4 to the conveyor belt
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().pathPoints[0] = GameObject.Find("Point #1");
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().pathPoints[1] = GameObject.Find("Point #2");
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().pathPoints[2] = GameObject.Find("Point #3");
+            conveyorBeltMovementPaths[i].GetComponent<BorderPathMovement>().pathPoints[3] = GameObject.Find("Point #4");
+
+            // conveyorBeltMovementPaths[i].transform.parent = ingredientObject.transform;
+            // conveyorBeltMovementPaths[i].transform.position = new Vector3(0, 0, 0);
+
+        }
+
+    }
+    **/
 
 }

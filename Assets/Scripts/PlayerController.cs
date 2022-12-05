@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(PlayerPhysics))]
 public class PlayerController : MonoBehaviour
@@ -22,10 +23,19 @@ public class PlayerController : MonoBehaviour
     private bool triggerEntered = false;
     private Collider2D itemCollidedWith;
 
+    private Animator anim;
+    
+    // The game manager
+    private GameObject gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         playerPhysics = GetComponent<PlayerPhysics>();
+        anim = gameObject.GetComponent<Animator>();
+
+        // Get the game manager
+        gameManager = this.transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -47,8 +57,26 @@ public class PlayerController : MonoBehaviour
         // playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
         playerPhysics.MoveAmount(amountToMove * Time.deltaTime);
 
-        if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
-            Debug.Log(itemCollidedWith.gameObject.name);
+        if (Input.GetKeyDown (KeyCode.Space)) {
+            
+            anim.Play("chef_holding");
+
+            if (triggerEntered == true) {
+
+                // Debug.Log(gameManager.GetComponent<GameManager>().currentRecipe[0]);
+                
+                // if (itemCollidedWith.gameObject.name.)
+                if (gameManager.GetComponent<GameManager>().currentRecipe.Any(itemCollidedWith.gameObject.name.Contains)) {
+                    Debug.Log("Correct ingredient!");
+                    // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
+                    Destroy(itemCollidedWith.gameObject);
+                } else {
+                    Debug.Log("Wrong ingredient!");
+                }
+
+                // Debug.Log(itemCollidedWith.gameObject.name);
+
+            }
         }
 
     }
@@ -71,11 +99,5 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D() {
         triggerEntered = false;
     }
-
-    /** 
-
-        - Cheese + Flour + Tomato = Pizza
-    
-    **/
 
 }
