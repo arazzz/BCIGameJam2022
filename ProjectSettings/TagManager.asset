@@ -44,3 +44,9 @@ TagManager:
   - name: Border
     uniqueID: 555744251
     locked: 0
+  - name: Background
+    uniqueID: 1055000055
+    locked: 0
+  - name: Foreground
+    uniqueID: 561256697
+    locked: 0
