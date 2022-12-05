@@ -357,7 +357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &176267480
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -719,6 +719,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRecipeTrial: 0
+  conveyorBelt:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  conveyorBeltMovementPaths:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   recipeTrials:
   - {fileID: 0}
   ingredientObject: {fileID: 0}
@@ -2931,8 +2943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9491304f91121443817ec92836c8749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 1886438160}
-  gameManager: {fileID: 0}
 --- !u!1001 &1941012145
 PrefabInstance:
   m_ObjectHideFlags: 0
