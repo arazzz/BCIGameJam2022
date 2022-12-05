@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
                 "applepie_apple",
                 "applepie_egg",
                 "applepie_flour",
+                "applepie_dish",
             }
         },
         { 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
                 "cheeseburger_bun",
                 "cheeseburger_cheese",
                 "cheeseburger_meat",
+                "cheeseburger_dish",
             }
         },
         { 
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour
                 "curry_sauce",
                 "curry_bellpeppers",
                 "curry_steak",
+                "curry_dish",
             }
         },
         { 
@@ -47,6 +50,7 @@ public class GameManager : MonoBehaviour
                 "strawberrycake_strawberry",
                 "strawberrycake_butter",
                 "strawberrycake_milk",
+                "strawberrycake_dish",
             }
         },
         { 
@@ -54,6 +58,7 @@ public class GameManager : MonoBehaviour
                 "pizza_flour",
                 "pizza_tomato",
                 "pizza_cheese",
+                "pizza_dish",
             }
         },
         
@@ -116,7 +121,7 @@ public class GameManager : MonoBehaviour
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.parent = recipeTrials[i].gameObject.transform;
                 
                 // ! TODO: Optimize the placement and sizing of the ingredients
-                recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.position = new Vector3(-5.5f + 2.0f*j, 1.75f, 0.0f);
+                recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.position = new Vector3(-4.84f + 3.2f*j, 2.8f, 0.0f);
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].transform.localScale = new Vector3(5f, 5f, 5f);
                 
                 recipeTrials[i].GetComponent<Recipe>().ingredients[j].AddComponent<BoxCollider2D>();
