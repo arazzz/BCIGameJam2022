@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
     private void spawnIngredientOnBelt(){
 
         
-        GameObject ingredient = Instantiate(ingredientPrefab, new Vector3(8, 8, 0), Quaternion.identity);
+        GameObject ingredient = Instantiate(ingredientPrefab, new Vector3(9, -8, 0), Quaternion.identity);
         ingredient.name = "applepie_apple";//$"Recipe {i} - Ingredient {j}";
 
         Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/applepie/applepie_apple");
