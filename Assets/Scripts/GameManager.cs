@@ -196,10 +196,6 @@ public class GameManager : MonoBehaviour
 
     private void spawnIngredientOnBelt() {
         
-        string randIngredient = ingredientSpritePaths[UnityEngine.Random.Range(0, ingredientSpritePaths.Length)];
-        GameObject ingredient = Instantiate(ingredientPrefab, new Vector3(8, -8, 0), Quaternion.identity);
-        ingredient.name = $"Ingredient {randIngredient}";
-
         Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/{randIngredient}");
 
         ingredient.GetComponent<SpriteRenderer>().sprite = ingredientSprite;
