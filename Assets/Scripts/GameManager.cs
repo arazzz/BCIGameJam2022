@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
     }
 
     void FixedUpdate(){
-       spawnIngredientOnBelt();
+    //    spawnIngredientOnBelt();
     }
 
     private void spawnIngredientOnBelt() {
