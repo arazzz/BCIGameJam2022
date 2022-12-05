@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
                     // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
                     Destroy(itemCollidedWith.gameObject);
                 } else {
-                    Debug.Log("Wrong ingredient!");
+                    anim.Play("chef_panic");
                 }
 
                 // Debug.Log(itemCollidedWith.gameObject.name);
