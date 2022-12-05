@@ -110,6 +110,8 @@ public class GameManager : MonoBehaviour
 
         borderPathMovement = GameObject.Find("BorderPathMovement");
 
+        ingredientPrefab = Resources.Load<GameObject>("Prefabs/RecipeIngredient");
+
         // float x1 = GameObject.Find("Left Border").GetComponent<SpriteRenderer>().bounds.size.x / 2 + GameObject.Find("Left Border").transform.position.x;
         // float x2 = GameObject.Find("Right Border").transform.position.x - GameObject.Find("Right Border").GetComponent<SpriteRenderer>().bounds.size.x / 2;
         // float y1 = GameObject.Find("Bottom Border").GetComponent<SpriteRenderer>().bounds.size.y / 2 + GameObject.Find("Bottom Border").transform.position.y;
@@ -201,7 +203,7 @@ public class GameManager : MonoBehaviour
         Sprite ingredientSprite = Resources.Load<Sprite>($"Sprites/menu/{randIngredient}");
 
         ingredient.GetComponent<SpriteRenderer>().sprite = ingredientSprite;
-        ingredient.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        ingredient.GetComponent<SpriteRenderer>().sortingOrder = 1;
         ingredient.transform.parent = ingredient.transform;
         ingredient.transform.localScale = new Vector3(5f, 5f, 5f);
         ingredient.AddComponent<BoxCollider2D>();

@@ -66,15 +66,17 @@ public class PlayerController : MonoBehaviour
                 // Debug.Log(gameManager.GetComponent<GameManager>().currentRecipe[0]);
                 
                 // if (itemCollidedWith.gameObject.name.)
-                if (gameManager.GetComponent<GameManager>().currentRecipe.Any(itemCollidedWith.gameObject.name.Contains)) {
-                    Debug.Log("Correct ingredient!");
-                    // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
-                    Destroy(itemCollidedWith.gameObject);
-                } else {
-                    anim.Play("chef_panic");
-                }
+                // Debug.Log("Current recipe: " + gameManager.GetComponent<GameManager>().currentRecipe);
+                // Debug.Log("Item collided with: " + itemCollidedWith.gameObject.name);
+                // if (gameManager.GetComponent<GameManager>().currentRecipe.Any(itemCollidedWith.gameObject.name.Contains)) {
+                //     Debug.Log("Correct ingredient!");
+                //     // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
+                //     Destroy(itemCollidedWith.gameObject);
+                // } else {
+                //     anim.Play("chef_panic");
+                // }
 
-                // Debug.Log(itemCollidedWith.gameObject.name);
+                Debug.Log(itemCollidedWith.gameObject.name);
 
             }
         }
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D foodItem) {
         triggerEntered = true;
         itemCollidedWith = foodItem;
+        Debug.Log("Trigger entered");
     }
 
     private void OnTriggerExit2D() {

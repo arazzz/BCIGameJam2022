@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class Ingredient : MonoBehaviour
 {
 
     // The ingredient game object
-    public GameObject ingredient;
-    public GameObject gameManager;
+    // public GameObject ingredient;
+    // public GameObject gameManager;
 
     void Awake() {
 
@@ -27,7 +28,7 @@ public class Ingredient : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
+        // gameManager = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
@@ -36,16 +37,9 @@ public class Ingredient : MonoBehaviour
         
     }
 
-
-    // Get random sprite from food sprites
-    Sprite GetRandomSprite(Dictionary<string, object> foodSprites) {
-
-        // Get random sprite from food sprites
-        Sprite[] sprites = (Sprite[])foodSprites["Food-2"];
-        Sprite randomSprite = sprites[Random.Range(0, sprites.Length)];
-
-        return randomSprite;
-
+    // On pointer click, debug the name of the ingredient
+    public void onMouseDown() {
+        Debug.Log("Clicked on " + gameObject.name);
     }
 
 }
