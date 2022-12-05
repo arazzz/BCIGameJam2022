@@ -472,9 +472,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 555744251
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6792453, g: 0.08009967, b: 0.15552399, a: 1}
   m_FlipX: 0
@@ -541,8 +541,37 @@ MonoBehaviour:
   - {fileID: 0}
   ingredientObject: {fileID: 0}
   ingredientPrefab: {fileID: 122884306344811032, guid: 35e0939c1db211d4ea48529decfaa941, type: 3}
+  setPathPoints:
+  - {fileID: 1462616306}
+  - {fileID: 2093614114}
+  - {fileID: 1231265950}
+  - {fileID: 911710793}
   recipeNames:
   - pizza
+  currentRecipeName: 
+  currentRecipe: []
+  conveyorBelt:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  conveyorBeltMovementPaths:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &313346739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,8 +784,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184115158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: -5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: -3.9955, y: -4.9924, z: 0}
+  m_LocalScale: {x: 5.0447693, y: 5.0447693, z: 1.0089538}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 313346736}
@@ -845,7 +874,7 @@ Animator:
   m_GameObject: {fileID: 1184115158}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b327ba9084ca499f98375db857698e4, type: 2}
+  m_Controller: {fileID: 9100000, guid: cbdf3614eb1c8494980aa893aa5911a6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1304,8 +1333,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1483309175
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
