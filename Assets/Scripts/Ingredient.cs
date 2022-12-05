@@ -5,47 +5,65 @@ using UnityEngine;
 public class Ingredient : MonoBehaviour
 {
 
-    // The ingredient game object
-    public GameObject ingredient;
-    public GameObject gameManager;
+    // public GameObject gameManager;
 
-    void Awake() {
+    private bool sendDown = false;
 
-        // Find Game Manager and get the food sprites
-        
-
-        // Dictionary<string, object> foodSprites = gameManager.GetComponent<GameManager>().foodSprites;
-
-        // Get random sprite from food sprites
-        // Sprite randomSprite = GetRandomSprite(foodSprites);
-
-        // Set the sprite of the ingredient
-        // ingredient.GetComponent<SpriteRenderer>().sprite = randomSprite;
-
-    }
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
+        // gameManager = GameObject.Find("GameManager");
     }
-
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
-        
+        if (sendDown == true)
+        {
+            FallDown();
+        }
     }
 
+    private void OnMouseDown()
+    {
+        if (transform.position.y > 7 && transform.position.x > -6.5 && transform.position.x < 5)
+        {
+            sendDown = true;
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
 
-    // Get random sprite from food sprites
-    Sprite GetRandomSprite(Dictionary<string, object> foodSprites) {
+            // Delete path child
+            Destroy(gameObject.transform.GetChild(0).gameObject);
 
-        // Get random sprite from food sprites
-        Sprite[] sprites = (Sprite[])foodSprites["Food-2"];
-        Sprite randomSprite = sprites[Random.Range(0, sprites.Length)];
+            // gameObject.AddComponent<Rigidbody2D>();
+        }
+    }
 
-        return randomSprite;
+    function OnCollisionEnter2D(Collider2D collision ) {
+     
+        if (collision.gameObject.tag == "food") {
+            Physics.IgnoreCollision(collision.collider, collider);
+        }
+     
+    }
+
+    private void FallDown()
+    {     
+        if (gameObject.transform.position.y < -5)
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+            sendDown = false;
+
+            // Remove the ridigbody component
+            // Destroy(gameObject.GetComponent<Rigidbody2D>());
+
+            // Set mass to 0
+            // gameObject.GetComponent<Rigidbody2D>().mass = 0;
+            // gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+        }
 
     }
+
 
 }
