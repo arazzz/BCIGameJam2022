@@ -37,15 +37,6 @@ public class Ingredient : MonoBehaviour
             // gameObject.AddComponent<Rigidbody2D>();
         }
     }
-
-    function OnCollisionEnter2D(Collider2D collision ) {
-     
-        if (collision.gameObject.tag == "food") {
-            Physics.IgnoreCollision(collision.collider, collider);
-        }
-     
-    }
-
     private void FallDown()
     {     
         if (gameObject.transform.position.y < -5)
@@ -54,6 +45,8 @@ public class Ingredient : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
 
             sendDown = false;
+
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
 
             // Remove the ridigbody component
             // Destroy(gameObject.GetComponent<Rigidbody2D>());

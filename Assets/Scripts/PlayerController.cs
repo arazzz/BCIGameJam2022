@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(PlayerPhysics))]
 public class PlayerController : MonoBehaviour
@@ -17,10 +18,15 @@ public class PlayerController : MonoBehaviour
     private bool triggerEntered = false;
     private Collider2D itemCollidedWith;
 
+    private Animator anim;
+
+    private GameObject gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         playerPhysics = GetComponent<PlayerPhysics>();
+        gameManager = this.transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -48,15 +54,41 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+         if (Input.GetKeyDown (KeyCode.Space)) {
+            
+            anim.Play("chef_holding");
+
+            Debug.Log(gameManager.GetComponent<GameManager>().currentRecipe[0]);
+
+            if (triggerEntered == true) {
+
+                // Debug.Log(gameManager.GetComponent<GameManager>().currentRecipe[0]);
+                
+                // if (itemCollidedWith.gameObject.name.)
+                if (gameManager.GetComponent<GameManager>().currentRecipe.Any(itemCollidedWith.gameObject.name.Contains)) {
+                    Debug.Log("Correct ingredient!");
+                    // gameManager.currentRecipe.Remove(itemCollidedWith.gameObject.name);
+                    Destroy(itemCollidedWith.gameObject);
+                } else {
+                    anim.Play("chef_panic");
+                }
+
+                // Debug.Log(itemCollidedWith.gameObject.name);
+
+            }
+        }
+
+
+
         
 
         // amountToMove = new Vector2(currentSpeed, 0);
         // playerPhysics.MoveAmount(direction*amountToMove * Time.deltaTime);
 
         // if (Input.GetKeyDown (KeyCode.Space) && triggerEntered == true) {
-        if (triggerEntered == true) {
-            Debug.Log(itemCollidedWith.gameObject.name);
-        }
+        // if (triggerEntered == true) {
+        //     Debug.Log();
+        // }
 
     }
 
