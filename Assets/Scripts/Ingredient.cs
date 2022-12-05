@@ -6,8 +6,8 @@ public class Ingredient : MonoBehaviour
 {
 
     // The ingredient game object
-    public GameObject ingredient;
     public GameObject gameManager;
+    private bool sendDown = false;
 
     void Awake() {
 
@@ -33,9 +33,29 @@ public class Ingredient : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (sendDown == true)
+        {
+            FallDown();
+        }
     }
 
+    private void OnMouseDown()
+    {
+        if (transform.position.y > 7 && transform.position.x > -6.5 && transform.position.x < 5)
+        {
+            sendDown = true;
+            gameObject.AddComponent<Rigidbody2D>();
+        }
+    }
+
+    private void FallDown()
+    {     
+        if (gameObject.transform.position.y < -5)
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        }
+    }
 
     // Get random sprite from food sprites
     Sprite GetRandomSprite(Dictionary<string, object> foodSprites) {
